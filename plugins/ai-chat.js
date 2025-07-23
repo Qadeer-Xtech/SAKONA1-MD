@@ -22,7 +22,7 @@ async (conn, mek, m, { from, args, q, reply, react }) => {
         const { data } = await axios.get(apiUrl);
 
         if (!data || !data.message) {
-            await react("❌");
+            await react("😯");
             return reply("AI failed to respond. Please try again later.");
         }
 
