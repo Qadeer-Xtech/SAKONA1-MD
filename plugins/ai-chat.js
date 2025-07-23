@@ -11,10 +11,14 @@ cmd({
 },
 async (conn, mek, m, { from, args, q, reply, react }) => {
     try {
-        // Is line ko behtar banaya gaya hai
-        if (!q || q.length === 0) return reply("Please provide a message for the AI.\nExample: `.ai Hello`");
+        const text = q?.trim();
 
-        const apiUrl = `https://lance-frank-asta.onrender.com/api/gpt?q=${encodeURIComponent(q)}`;
+        if (!text) {
+            await react("⚠️");
+            return reply("Please provide a message for the AI.\nExample: `.ai Hello`");
+        }
+
+        const apiUrl = `https://lance-frank-asta.onrender.com/api/gpt?q=${encodeURIComponent(text)}`;
         const { data } = await axios.get(apiUrl);
 
         if (!data || !data.message) {
