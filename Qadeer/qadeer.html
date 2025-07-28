@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAKONA MD Dashboard - Matrix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --matrix-green: #39FF14;
+      --dark-bg: #050505;
+      --container-bg: rgba(10, 10, 10, 0.85);
+      --red-alert: #ff4141;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Fira Code', monospace;
+      background-color: var(--dark-bg);
+      color: var(--matrix-green);
+      overflow: hidden;
+      /* Scanline and Grid effect */
+      background-image:
+        linear-gradient(rgba(0,0,0,0.5) 50%, transparent 50%),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 100% 4px, 50px 50px, 50px 50px;
+      animation: scanline 10s linear infinite;
+    }
+
+    @keyframes scanline {
+        from { background-position-y: 0; }
+        to { background-position-y: 100vh; }
+    }
+
+    .container {
+      background: var(--container-bg);
+      backdrop-filter: blur(2px);
+      padding: 35px 40px;
+      text-align: left;
+      width: 90%;
+      max-width: 600px;
+      border: 2px solid var(--matrix-green);
+      box-shadow: 0 0 25px rgba(57, 255, 20, 0.25), inset 0 0 15px rgba(57, 255, 20, 0.15);
+      animation: fadeIn 1s ease-out;
+      position: relative;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    h1 {
+      font-size: 2.5em;
+      font-weight: 600;
+      color: #fff;
+      margin-top: 0;
+      margin-bottom: 30px;
+      letter-spacing: 1px;
+      position: relative;
+      /* Glitch Effect */
+      animation: glitch 3s linear infinite;
+    }
+
+    h1::before,
+    h1::after {
+        content: 'SAKONA MD Dashboard';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--container-bg);
+        overflow: hidden;
+    }
+
+    h1::before {
+        left: 2px;
+        text-shadow: -2px 0 #ff00c1;
+        animation: glitch-before 3s linear infinite reverse;
+    }
+
+    h1::after {
+        left: -2px;
+        text-shadow: -2px 0 #00ffff;
+        animation: glitch-after 3s linear infinite reverse;
+    }
+
+    @keyframes glitch { 2%, 64% { transform: translate(2px, 0) skew(0deg); } 4%, 60% { transform: translate(-2px, 0) skew(0deg); } 62% { transform: translate(0, 0) skew(5deg); } }
+    @keyframes glitch-before { 0%, 17%, 34%, 51%, 68%, 85%, 100% { clip-path: inset(0 0 50% 0); } 8%, 25%, 42%, 59%, 76%, 93% { clip-path: inset(50% 0 0 0); } }
+    @keyframes glitch-after { 0%, 17%, 34%, 51%, 68%, 85%, 100% { clip-path: inset(50% 0 0 0); } 8%, 25%, 42%, 59%, 76%, 93% { clip-path: inset(0 0 50% 0); } }
+
+
+    #status {
+      font-size: 1.2em;
+      font-weight: 400;
+      transition: color 0.5s ease;
+      position: relative;
+    }
+    
+    #status::before {
+        content: '> ';
+    }
+
+    /* Blinking cursor */
+    #status::after {
+      content: '_';
+      opacity: 1;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .online {
+      color: var(--matrix-green);
+    }
+
+    .offline {
+      color: var(--red-alert);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SAKONA Md Dashboard</h1>
+    <p id="status">[QUERYING SYSTEM STATUS...]</p>
+  </div>
+
+  <script>
+    async function checkBotStatus() {
+      const statusElement = document.getElementById('status');
+      try {
+        const response = await fetch('/status');
+        if (!response.ok) throw new Error('Network response was not ok');
+        const data = await response.json();
+
+        if (data.isRunning) {
+          statusElement.textContent = 'STATUS: [ONLINE] - ALL SYSTEMS NOMINAL';
+          statusElement.className = 'online';
+        } else {
+          statusElement.textContent = 'STATUS: [OFFLINE] - CONNECTION SEVERED';
+          statusElement.className = 'offline';
+        }
+      } catch (error) {
+        statusElement.textContent = 'STATUS: [ERROR] - UNABLE TO REACH HOST';
+        statusElement.className = 'offline';
+        console.error('Error fetching bot status:', error);
+      }
+    }
+
+    // Check status immediately on load and then poll every 5 seconds
+    setTimeout(checkBotStatus, 1500); // Initial delay to show the "querying" message
+    setInterval(checkBotStatus, 5000);
+  </script>
+</body>
+</html>
