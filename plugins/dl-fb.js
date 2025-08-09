@@ -27,7 +27,7 @@ cmd({
 
     await conn.sendMessage(from, {
       video: { url: videoUrl },
-      caption: "📥 *Facebook Video Downloaded Successfully*\n\n> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅʏʙʏ ᴛᴇᴄʜ* ✅",
+      caption: "📥 *Facebook Video Downloaded Successfully*\n\n> *𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 𝚀𝙰𝙳𝙴𝙴𝚁 𝙺𝙷𝙰𝙽* ✅",
     }, { quoted: m });
 
   } catch (error) {
