@@ -2,8 +2,6 @@ const { sleep } = require('../lib/functions');
 const config = require('../config');
 const { cmd, commands } = require('../command');
 
-// DybyTech 
-
 cmd({
     pattern: "leave",
     alias: ["left", "leftgc", "leavegc"],

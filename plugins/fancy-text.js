@@ -63,7 +63,7 @@ cmd({
         }
 
         const chosen = displayList[selectedNumber - 1];
-        const finalText = `✨ *Your Text in Selected Style:*\n\n${chosen}\n\n> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅʏʙʏ ᴛᴇᴄʜ*`;
+        const finalText = `✨ *Your Text in Selected Style:*\n\n${chosen}\n\n> *𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 𝚀𝙰𝙳𝙴𝙴𝚁 𝙺𝙷𝙰𝙽*`;
 
         await conn.sendMessage(from, {
           text: finalText
