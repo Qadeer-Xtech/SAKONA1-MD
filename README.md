@@ -10,7 +10,6 @@ ___
 
 
 
-
 <p align="center">
 <a href="https://github.com/Qadeer-Xtech/followers"><img title="Followers" src="https://img.shields.io/github/followers/Qadeer-Xtech?color=purple&style=flat-square"></a>
 <a href="https://github.com/Qadeer-Xtech/SAKONA1-MD/stargazers/"><img title="Stars" src="https://img.shields.io/github/stars/Qadeer-Xtech/SAKONA1-MD?color=blue&style=flat-square"></a>
